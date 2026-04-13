@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>概算システム</title>
+  </head>
+</html>
+
+<body>
+  <h1>概算見積もりシステム</h1>
+
+  <from>
+    <div>
+      <label for="bulk-code">バルクコード</label>
+      <input type="text" id="bulk-code" name="bulk_code">
+    </div>
+
+    <div>
+      <label for="tubu">粒数</label>
+      <input type="ball" id="tubu" name="tubu">
+    </div>
+
+    <div>
+      <label for="lot1">ロット 1</label>
+      <input type="=number" id="lot1" name="lot1">
+    </div>
+
+    <div>
+      <label for="lot2">ロット 2</label>
+      <input type="number" id="lot2" name="lot2">
+      <button type="button">+追加</button>
+    </div>
+
+    <h2>資材仕様</h2>
+
+    <div>
+      <label for="container">容器</label>
+      <select id="container" name="container">
+        <option value="">選択してください</option>
+        <option value="alumi 1">アルミ袋（白）</option>
+        <option value="alumi 2">アルミ袋（シルバー）</option>
+        <option value="alumi 3">アルミ袋（印刷）</option>
+        <option value="bottole">茶瓶</option>
+        <option value="frost">白フロスト瓶</option>
+        <option value="plastic">プラボトル</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="size">サイズ</label>
+      <select id="size" name="size">
+        <option value="">選択してください</option>
+        <option value="size1">8号</option>
+        <option value="size2">10号</option>
+        <option value="size3">11号</option>
+        <option value="size4">12号</option>
+        <option value="size5">TZ-10</option>
+        <option value="size6">TZ-11</option>
+        <option value="size7">AL-9</option>
+        <option value="size8">AL-10</option>
+        <option value="size9">AL11</option>
+        <option value="size10">AL-12</option>
+      </select>
+    </div>
+
+    <div>
+      <p>化粧箱</p>
+      <label><input type="checkbox" name="box" value="yes"> 有り</label>
+      <label><input type="checkbox" name="box" value="no"> 無し</label>
+    </div>
+
+    <div>
+      <p>シュリンク</p>
+      <label><input type="checkbox" name="shrink" value="yes"> 有り</label>
+      <label><input type="checkbox" name="shrink" value="no"> 無し</label>
+    </div>
+
+    <div>
+      <p>封印シール</p>
+      <label><input type="checkbox" name="huuin" value="yes"> 有り</label>
+      <label><input type="checkbox" name="huuin" value="no"> 無し</label>
+    </div>
+
+    <h2>合計金額</h2>
+
+    <table border1="1">
+      <tr>
+        <th>ロット</th>
+      <th>金額</th>
+      </tr>
+      <tr>
+        <td id="lotDisplay">150ロット</td>
+        <td>〇〇円</td>
+      </tr>
+    
+    </table>
+
+ 
+
+  </from>
+</body>
+
+

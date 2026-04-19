@@ -1,0 +1,54 @@
+h1{
+  width: 100%;
+  border: 2px solid #b0c4de;
+  background-color: #b0c4de;
+  padding: 5px 0px;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  font-family: "Yu Gothic", sans-serif;
+  background: #f5f5f5;
+}
+
+#parent{
+  width: 45%;
+  border: 1px solid;
+  border-radius: 10px;       /* 角を丸く */
+}
+
+#parent div {
+  margin-bottom: 10px;
+}
+
+#parent label {
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+#parent input {
+  width: 200px;
+}
+
+#parent button {
+  margin-left: 130px;
+}
+
+.row {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.item label {
+  margin-right: 10px;
+}
+

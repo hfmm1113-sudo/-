@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  font-family: "Yu Gothic", sans-serif;
+  background: #f5f5f5;
+}
+
+.container {
+  width: 1000px;
+  margin: 30px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.layout {
+  display: flex;
+  gap: 40px;
+}
+
+.left, .right {
+  flex: 1;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.group {
+  margin-bottom: 20px;
+}
+
+.group label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: #eee;
+}
+
+.summary {
+  margin-top: 20px;
+}
+
+.pdf {
+  margin-top: 20px;
+  width: 100%;
+  background: #4CAF50;
+  color: white;
+  border: none;
+}

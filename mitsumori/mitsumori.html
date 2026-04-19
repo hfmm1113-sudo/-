@@ -1,104 +1,120 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>概算システム</title>
-  </head>
-</html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>概算システム</title>
+  <link rel="stylesheet" href="mitsumori.css">
+</head>
+
 
 <body>
   <h1>概算見積もりシステム</h1>
 
   <from>
-    <div>
-      <label for="bulk-code">バルクコード</label>
-      <input type="text" id="bulk-code" name="bulk_code">
-    </div>
 
-    <div>
-      <label for="tubu">粒数</label>
-      <input type="ball" id="tubu" name="tubu">
-    </div>
+    <div id="parent">
+      <div>
+        <label for="bulk-code">バルクコード</label>
+        <input type="text" id="bulk-code" name="bulk_code">
+      </div>
 
-    <div>
-      <label for="lot1">ロット 1</label>
-      <input type="=number" id="lot1" name="lot1">
-    </div>
+      <div>
+        <label for="tubu">粒数</label>
+        <input type="number" id="tubu" name="tubu">
+      </div>
 
-    <div>
-      <label for="lot2">ロット 2</label>
-      <input type="number" id="lot2" name="lot2">
-      <button type="button">+追加</button>
-    </div>
+      <div>
+        <label for="lot1">ロット 1</label>
+        <input type="=number" id="lot1" name="lot1">
+      </div>
 
-    <h2>資材仕様</h2>
+      <div>
+        <label for="lot2">ロット 2</label>
+        <input type="number" id="lot2" name="lot2">
+        <button type="button">+追加</button>
+      </div>
 
-    <div>
-      <label for="container">容器</label>
-      <select id="container" name="container">
-        <option value="">選択してください</option>
-        <option value="alumi 1">アルミ袋（白）</option>
-        <option value="alumi 2">アルミ袋（シルバー）</option>
-        <option value="alumi 3">アルミ袋（印刷）</option>
-        <option value="bottole">茶瓶</option>
-        <option value="frost">白フロスト瓶</option>
-        <option value="plastic">プラボトル</option>
-      </select>
-    </div>
+      <h2>資材仕様</h2>
 
-    <div>
-      <label for="size">サイズ</label>
-      <select id="size" name="size">
-        <option value="">選択してください</option>
-        <option value="size1">8号</option>
-        <option value="size2">10号</option>
-        <option value="size3">11号</option>
-        <option value="size4">12号</option>
-        <option value="size5">TZ-10</option>
-        <option value="size6">TZ-11</option>
-        <option value="size7">AL-9</option>
-        <option value="size8">AL-10</option>
-        <option value="size9">AL11</option>
-        <option value="size10">AL-12</option>
-      </select>
-    </div>
+      <div class="row">
+        <div class="item">
+          <label for="container">容器</label>
+          <select id="container" name="container">
+            <option value="">選択してください</option>
+            <option value="alumi1">アルミ袋（白）</option>
+            <option value="alumi2">アルミ袋（シルバー）</option>
+            <option value="alumi3">アルミ袋（印刷）</option>
+            <option value="bottle">茶瓶</option>
+            <option value="frost">白フロスト瓶</option>
+            <option value="plastic">プラボトル</option>
+          </select>
+        </div>
 
-    <div>
-      <p>化粧箱</p>
-      <label><input type="checkbox" name="box" value="yes"> 有り</label>
-      <label><input type="checkbox" name="box" value="no"> 無し</label>
-    </div>
+        <div class="item">
+          <label for="size">サイズ</label>
+          <select id="size" name="size">
+            <option value="">選択してください</option>
+            <option value="size1">AL-9</option>
+            <option value="size1">AL-10</option>
+            <option value="size1">TZ-11W</option>
+            <option value="size1">AL-11</option>
+            <option value="size1">8号</option>
+            <option value="size2">10号</option>
+            <option value="size3">11号</option>
+            <option value="size4">12号</option>
+          </select>
+        </div>
+      </div>
 
-    <div>
-      <p>シュリンク</p>
-      <label><input type="checkbox" name="shrink" value="yes"> 有り</label>
-      <label><input type="checkbox" name="shrink" value="no"> 無し</label>
-    </div>
+      <div class="row">
+        <span>化粧箱</span>
+        <label><input type="checkbox"> 有り</label>
+        <label><input type="checkbox"> 無し</label>
+      </div>
 
-    <div>
-      <p>封印シール</p>
-      <label><input type="checkbox" name="huuin" value="yes"> 有り</label>
-      <label><input type="checkbox" name="huuin" value="no"> 無し</label>
-    </div>
+      <div class="row">
+        <span>シュリンク</span>
+        <label><input type="checkbox"> 有り</label>
+        <label><input type="checkbox"> 無し</label>
+      </div>
 
-    <h2>合計金額</h2>
+      <div class="row">
+        <span>封印シール</span>
+        <label><input type="checkbox"> 有り</label>
+        <label><input type="checkbox"> 無し</label>
+      </div>
 
-    <table border1="1">
-      <tr>
-        <th>ロット</th>
-      <th>金額</th>
-      </tr>
-      <tr>
-        <td id="lotDisplay">150ロット</td>
-        <td>〇〇円</td>
-      </tr>
-    
-    </table>
+      <h2>合計金額</h2>
 
- 
+      <table id="lot-table">
+        <tr>
+          <td>〇〇ロット</td>
+          <td>〇〇円</td>
+        </tr>
+        <tr>
+          <td>〇〇ロット</td>
+          <td>〇〇円</td>
+        </tr>
+      </table>
 
+      <table>
+        <tr>
+          <th>提出金額</th>
+          <th>利益額</th>
+        </tr>
+        <tr>
+          <td>〇〇円</td>
+          <td>〇〇円</td>
+        </tr>
+      </table>
+      </table>
   </from>
+
+  <div class="button-area">
+    <button type="submit" class="pdf-btn">見積PDF作成</button>
+  </div>
 </body>
 
-
+</html>

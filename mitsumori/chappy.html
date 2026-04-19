@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>概算見積もりシステム</title>
+  <link rel="stylesheet" href="chappy.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>概算見積もりシステム</h1>
+
+  <form>
+    <div class="layout">
+
+      <!-- 左 -->
+      <div class="left">
+        <label>バルクコード</label>
+        <input type="text" placeholder="A12345">
+
+        <label>ロット1</label>
+        <input type="number" value="150">
+
+        <label>ロット2</label>
+        <input type="number" value="200">
+
+        <button type="button">＋追加</button>
+
+        <label>粒数</label>
+        <input type="number">
+
+        <label>容器</label>
+        <select>
+          <option>フロスト瓶</option>
+          <option>プラボトル</option>
+          <option>アルミ袋</option>
+        </select>
+      </div>
+
+      <!-- 右 -->
+      <div class="right">
+        <h2>資材仕様</h2>
+
+        <div class="group">
+          <p>化粧箱</p>
+          <label><input type="radio" name="box"> 有り</label>
+          <label><input type="radio" name="box"> 無し</label>
+        </div>
+
+        <div class="group">
+          <p>シュリンク</p>
+          <label><input type="radio" name="shrink"> 有り</label>
+          <label><input type="radio" name="shrink"> 無し</label>
+        </div>
+
+        <div class="group">
+          <p>封印シール</p>
+          <label><input type="radio" name="seal"> 有り</label>
+          <label><input type="radio" name="seal"> 無し</label>
+        </div>
+
+        <h2>合計金額</h2>
+
+        <table>
+          <tr>
+            <th>ロット</th>
+            <th>金額</th>
+          </tr>
+          <tr>
+            <td>150ロット</td>
+            <td>〇〇円</td>
+          </tr>
+          <tr>
+            <td>200ロット</td>
+            <td>〇〇円</td>
+          </tr>
+        </table>
+
+        <table class="summary">
+          <tr>
+            <th>提出金額</th>
+            <th>利益額</th>
+          </tr>
+          <tr>
+            <td>〇〇円</td>
+            <td>〇〇円</td>
+          </tr>
+        </table>
+
+        <button class="pdf">見積PDF作成</button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

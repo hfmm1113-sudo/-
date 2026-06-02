@@ -1,120 +1,900 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 
 <head>
+  <title></title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>概算システム</title>
-  <link rel="stylesheet" href="mitsumori.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts: Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <!-- Bootstrap: CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!--  -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Bootstrap: JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer
+    crossorigin="anonymous">
+    </script>
+  <!-- Day.js -->
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 </head>
 
-
 <body>
-  <h1>概算見積もりシステム</h1>
-
-  <from>
-
-    <div id="parent">
-      <div>
-        <label for="bulk-code">バルクコード</label>
-        <input type="text" id="bulk-code" name="bulk_code">
-      </div>
-
-      <div>
-        <label for="tubu">粒数</label>
-        <input type="number" id="tubu" name="tubu">
-      </div>
-
-      <div>
-        <label for="lot1">ロット 1</label>
-        <input type="=number" id="lot1" name="lot1">
-      </div>
-
-      <div>
-        <label for="lot2">ロット 2</label>
-        <input type="number" id="lot2" name="lot2">
-        <button type="button">+追加</button>
-      </div>
-
-      <h2>資材仕様</h2>
-
-      <div class="row">
-        <div class="item">
-          <label for="container">容器</label>
-          <select id="container" name="container">
-            <option value="">選択してください</option>
-            <option value="alumi1">アルミ袋（白）</option>
-            <option value="alumi2">アルミ袋（シルバー）</option>
-            <option value="alumi3">アルミ袋（印刷）</option>
-            <option value="bottle">茶瓶</option>
-            <option value="frost">白フロスト瓶</option>
-            <option value="plastic">プラボトル</option>
-          </select>
-        </div>
-
-        <div class="item">
-          <label for="size">サイズ</label>
-          <select id="size" name="size">
-            <option value="">選択してください</option>
-            <option value="size1">AL-9</option>
-            <option value="size1">AL-10</option>
-            <option value="size1">TZ-11W</option>
-            <option value="size1">AL-11</option>
-            <option value="size1">8号</option>
-            <option value="size2">10号</option>
-            <option value="size3">11号</option>
-            <option value="size4">12号</option>
-          </select>
+  <div class="container-fluid">
+    <!-- ヘッダー部 -->
+    <nav class="navbar navbar-expand-lg py-4 fixed-top shadow-sm" style="background-color:#2550ce;"
+      data-bs-theme="light">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 px-3 fw-bold text-white" style="font-size: 1.5rem;">
+          概算見積もりシステム
+        </span>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#estMenu"
+          aria-controls="estMenu" aria-expanded="false">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="estMenu" class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto pe-4 mb-0 mb-lg-0">
+            <li class="nav-item" role="button">
+              <!-- TOPへ戻る -->
+              <a href="index.html" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-house-door-fill"></i>
+                TOPへ戻る
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
+    </nav>
 
-      <div class="row">
-        <span>化粧箱</span>
-        <label><input type="checkbox"> 有り</label>
-        <label><input type="checkbox"> 無し</label>
+    <!-- ボディ部 -->
+    <main class="container-fluid estimate-body">
+      <!-- 画面共通部（上部） -->
+      <form id="estBaseForm" class="needs-validation" novalidate>
+        <div class="row mb-3">
+          <label for="createdAt" class="col-sm-1 col-form-label text-sm-end">
+            作成日 <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-2 has-validation position-relative">
+            <input type="date" id="createdAt" class="form-control" name="created_at" required>
+            <div class="invalid-tooltip">作成日を入力して下さい</div>
+          </div>
+          <label for="caseNo" class="col-sm-1 col-form-label text-sm-end">
+            案件No <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-2 has-validation position-relative">
+            <input type="text" id="caseNo" class="form-control" name="case_no" required autofocus>
+            <div class="invalid-tooltip">案件Noを入力して下さい</div>
+          </div>
+          <label for="customerName" class="col-sm-1 ms-3 col-form-label">
+            顧客名 <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-4 position-relative">
+            <div class="input-group has-validation">
+              <input type="text" id="customerName" class="form-control" name="customer_name" required>
+              <span class="input-group-text">様</span>
+              <div class="invalid-tooltip">顧客名を入力して下さい</div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- 区切り線 -->
+      <div class="row mb-3">
+        <div class="col-sm-12">
+          <hr>
+        </div>
       </div>
+      <!-- 資材情報 -->
+      <!-- [TODO] Djangoアプリとの接続パスが必要 -->
+      <form id="estMainForm" method="post" action="">
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header h5">資材情報</div>
+              <div class="card-body">
+                <div class="row mb-4">
+                  <div class="row g-3 mb-3">
 
-      <div class="row">
-        <span>シュリンク</span>
-        <label><input type="checkbox"> 有り</label>
-        <label><input type="checkbox"> 無し</label>
+                    <!-- バルクコード -->
+                    <div class="col-md-8">
+                      <label for="bulkCode" class="form-label text-nowrap">
+                        バルクコード
+                      </label>
+
+                      <input type="text" id="bulkCode" class="form-control">
+                    </div>
+
+                    <!-- 粒数 -->
+                    <div class="col-md-4">
+                      <label for="tablet" class="form-label text-nowrap">
+                        粒数
+                      </label>
+
+                      <input type="number" id="tablet" class="form-control" step="10" min="0">
+                    </div>
+
+                  </div>
+
+
+                  <!-- ロット -->
+                  <div class="row row-cols-2 row-cols-md-6 g-3">
+
+                    <div class="col">
+                      <label class="form-label text-nowrap">ロット 1</label>
+                      <input type="number" class="form-control">
+                    </div>
+
+                    <div class="col">
+                      <label class="form-label text-nowrap">ロット 2</label>
+                      <input type="number" class="form-control">
+                    </div>
+
+                    <div class="col">
+                      <label class="form-label text-nowrap">ロット 3</label>
+                      <input type="number" class="form-control">
+                    </div>
+
+                    <div class="col">
+                      <label class="form-label text-nowrap">ロット 4</label>
+                      <input type="number" class="form-control">
+                    </div>
+
+                    <div class="col">
+                      <label class="form-label text-nowrap">ロット 5</label>
+                      <input type="number" class="form-control">
+                    </div>
+
+                    <div class="col">
+                      <label class="form-label text-nowrap">ロット 6</label>
+                      <input type="number" class="form-control">
+                    </div>
+
+                  </div>
+                </div>
+                <div class="row mb-0">
+                  <div class="col-sm-12 d-flex justify-content-end">
+                    <button type="button" id="calcBtn" class="btn btn-primary">
+                      <i class="bi bi-calculator-fill"></i> 仮見積もり
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- 区切り線 -->
+      <div class="row mb-3">
+        <div class="col-sm-12">
+          <hr>
+        </div>
       </div>
+      <!-- 資材仕様 -->
+      <form id="estSpecForm">
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <div class="card">
+              <!-- タブリスト -->
+              <div class="card-header">
+                <h5 class="mb-3">資材仕様</h5>
+                <ul id="matTab" class="nav nav-tabs nav-fill card-header-tabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button type="button" id="almiWhite" class="nav-link active" role="tab" data-bs-toggle="tab"
+                      data-bs-target="#almiWhitePane" aria-controls="almiWhitePane" aria-selected="true">
+                      <i class="bi bi-capsule"></i>アルミ袋（白）
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button type="button" id="almiSilver" class="nav-link" role="tab" data-bs-toggle="tab"
+                      data-bs-target="#almiSilverPane" aria-controls="almiSilverPane" aria-selected="false">
+                      <i class="bi bi-capsule"></i>アルミ袋（シルバー）
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button type="button" id="almiColor" class="nav-link" role="tab" data-bs-toggle="tab"
+                      data-bs-target="#almiColorPane" aria-controls="almiColorPane" aria-selected="false">
+                      <i class="bi bi-capsule"></i>袋（カラー・クラフト）
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button type="button" id="almiPrint" class="nav-link" role="tab" data-bs-toggle="tab"
+                      data-bs-target="#almiPrintPane" aria-controls="almiPrintPane" aria-selected="false">
+                      <i class="bi bi-capsule"></i>アルミ袋（印刷）
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button type="button" id="brownBottle" class="nav-link" role="tab" data-bs-toggle="tab"
+                      data-bs-target="#brownBottlePane" aria-controls="brownBottlePane" aria-selected="false">
+                      <i class="bi bi-capsule"></i> 茶瓶
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button type="button" id="whiteFlostBottle" class="nav-link" role="tab" data-bs-toggle="tab"
+                      data-bs-target="#whiteFlostBottlePane" aria-controls="whiteFlostBottlePane" aria-selected="false">
+                      <i class="bi bi-capsule"></i> 白フロスト瓶
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button type="button" id="plaBottle" class="nav-link" role="tab" data-bs-toggle="tab"
+                      data-bs-target="#plaBottlePane" aria-controls="plaBottlePane" aria-selected="false">
+                      <i class="bi bi-capsule"></i>プラボトル
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <!-- タブパネル -->
+              <div class="card-body">
+                <div id="matTabContent" class="tab-content">
+                  <!-- これは「アルミ袋（白）」のUIです -->
+                  <div id="almiWhitePane" class="tab-pane fade show p-3 active" role="tabpanel"
+                    aria-labelledby="almiWhite" tabindex="0">
+                    <div class="row mb-3">
+                      <!-- 左側 -->
+                      <div class="col-sm-7">
+                        <div class="row mb-3">
+                          <label for="" class="col-sm-2 col-form-label">対象にする？</label>
+                          <div class="col-sm-4 pt-2">
+                            <div class="form-check form-switch">
+                              <input type="checkbox" id="isAlmiWhite" class="form-check-input" role="switch">
+                              <label for="isAlmiWhite" class="form-check-label">する</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="almiWhiteSize" class="col-sm-2 col-form-label">サイズ</label>
+                          <div class="col-sm-4">
+                            <select id="almiWhiteSize" class="form-select" name="almi_white_size">
+                              <option value="" selected>選択してください</option>
 
-      <div class="row">
-        <span>封印シール</span>
-        <label><input type="checkbox"> 有り</label>
-        <label><input type="checkbox"> 無し</label>
-      </div>
+                              <option value="SHIKYU">支給</option>
+                              <option value="K11261">K11261　AL-9W（ホワイト）穴無し</option>
+                              <option value="K11260">K11260　AL-TZ10W（ホワイト）</option>
+                              <option value="K11262">K11262　AL-10W（ホワイト）</option>
+                              <option value="K11266">K11266　AL-TZ11W（ホワイト）</option>
+                              <option value="K11263">K11263　AL-12W（ホワイト）</option>
+                              <option value="K11264">K11264　AL-14W（ホワイト）</option>
+                              <option value="K11265">K11265　AL-16W（ホワイト）</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-4">
+                          <label for="almiWhiteLabel" class="col-sm-2 col-form-label">ラベル</label>
+                          <div class="col-sm-6">
+                            <span id="almiWhiteLabelBtn" class="label-size-box">
+                              ラベルサイズ：○○×○○まで
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 右側 -->
+                      <div class="col-sm-5">
+                        <div class="alert alert-success" role="alert">
+                          <h5 class="alert-heading">【推奨】</h5>
+                          <ul>
+                            <li>AL-TZ11W</li>
+                            <li>約 1/3 程度の容量です</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- これは「アルミ袋（シルバー）」のUIです -->
+                  <div id="almiSilverPane" class="tab-pane fade p-3" role="tabpanel" aria-labelledby="almiSilver"
+                    tabindex="0">
+                    <div class="row mb-3">
+                      <!-- 左側 -->
+                      <div class="col-sm-7">
+                        <div class="row mb-3">
+                          <label for="" class="col-sm-2 col-form-label">対象にする？</label>
+                          <div class="col-sm-4 pt-2">
+                            <div class="form-check form-switch">
+                              <input type="checkbox" id="isAlmiSilver" class="form-check-input" role="switch">
+                              <label for="isAlmiSilver" class="form-check-label">する</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="almiSilverSize" class="col-sm-2 col-form-label">サイズ</label>
+                          <div class="col-sm-4">
+                            <select id="almiSilverSize" class="form-select" name="almi_sliver_size">
+                              <option value="" selected>選択してください</option>
 
-      <h2>合計金額</h2>
+                              <option value="SHIKYU">支給</option>
+                              <option value="K11220">K11220　AL-10</option>
+                              <option value="K11221">K11221　AL-12</option>
+                              <option value="K11222">K11222　AL-14</option>
+                              <option value="K11">K11　AL-16</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-4">
+                          <label for="almiSilverLabel" class="col-sm-2 col-form-label">ラベル</label>
+                          <div class="col-sm-6">
+                            <!-- シルバーアルミ：ラベル -->
+                            <span id="almiSilverLabelBtn" class="label-size-box">
+                              ラベルサイズ：◯◯ x ◯◯ まで
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 右側 -->
+                      <div class="col-sm-5">
+                        <div class="alert alert-success" role="alert">
+                          <h5 class="alert-heading">【例】</h5>
+                          <ul>
+                            <li>AL-TZ11W</li>
+                            <li>約 1/3 程度の容量です</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- これは「アルミ袋（カラー・クラフト）」のUIです -->
+                  <div id="almiColorPane" class="tab-pane fade p-3" role="tabpanel" aria-labelledby="almiColor"
+                    tabindex="0">
+                    <div class="row mb-3">
+                      <!-- 左側 -->
+                      <div class="col-sm-7">
+                        <div class="row mb-3">
+                          <label for="" class="col-sm-2 col-form-label">対象にする？</label>
+                          <div class="col-sm-4 pt-2">
+                            <div class="form-check form-switch">
+                              <input type="checkbox" id="isAlmiSilver" class="form-check-input" role="switch">
+                              <label for="isAlmiSilver" class="form-check-label">する</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="almiSilverSize" class="col-sm-2 col-form-label">サイズ</label>
+                          <div class="col-sm-4">
+                            <select id="almiColorSize" class="form-select" name="almi_color_size">
+                              <option value="" selected>選択してください</option>
 
-      <table id="lot-table">
-        <tr>
-          <td>〇〇ロット</td>
-          <td>〇〇円</td>
-        </tr>
-        <tr>
-          <td>〇〇ロット</td>
-          <td>〇〇円</td>
-        </tr>
-      </table>
+                              <option value="SHIKYU">支給</option>
+                              <option value="K11291">K11291　AL-1013GD（ゴールド）</option>
+                              <option value="K11293">K11293　AL-1013BK（ブラック）</option>
+                              <option value="K11294">K11294　AL-1013R（レッド）</option>
+                              <option value="K11295">K11295　AL-1216BK（ブラック）</option>
+                              <option value="K11296">K11296　AL-1216R（レッド）</option>
+                              <option value="K11297">K11297　AL-1216GR（グリーン）</option>
+                              <option value="K11292">K11292　AL-1216GD（ゴールド）</option>
+                              <option value="K11298">K11298　AL-1216OR（オレンジ）</option>
+                              <option value="K11508">K11508　ALスタンド　120*200　クラフト穴無し</option>
+                              <option value="K11505">K11505　ALスタンド　110*170　クラフト穴無し</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-4">
+                          <label for="almiSilverLabel" class="col-sm-2 col-form-label">ラベル</label>
+                          <div class="col-sm-6">
+                            <!-- カラー・クラフト：ラベル -->
+                            <span id="almiColorLabelBtn" class="label-size-box">
+                              ラベルサイズ：◯◯ x ◯◯ まで
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 右側 -->
+                      <div class="col-sm-5">
+                        <div class="alert alert-success" role="alert">
+                          <h5 class="alert-heading">【例】</h5>
+                          <ul>
+                            <li>AL-TZ11W</li>
+                            <li>約 1/3 程度の容量です</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- これは「アルミ袋（印刷）」のUIです -->
+                  <div id="almiPrintPane" class="tab-pane fade p-3" role="tabpanel" aria-labelledby="almiPrint"
+                    tabindex="0">
+                    <div class="row mb-3">
+                      <!-- 左側 -->
+                      <div class="col-sm-7">
+                        <div class="row mb-3">
+                          <label for="" class="col-sm-2 col-form-label">対象にする？</label>
+                          <div class="col-sm-4 pt-2">
+                            <div class="form-check form-switch">
+                              <input type="checkbox" id="isAlmiPrint" class="form-check-input" role="switch">
+                              <label for="isAlmiPrint" class="form-check-label">する</label>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- 別途 または 支給 -->
+                        <div class="row mb-2">
+                          <label class="col-sm-2 col-form-label"></label>
 
-      <table>
-        <tr>
-          <th>提出金額</th>
-          <th>利益額</th>
-        </tr>
-        <tr>
-          <td>〇〇円</td>
-          <td>〇〇円</td>
-        </tr>
-      </table>
-      </table>
-  </from>
+                          <div class="col-sm-6">
+                            <span class="text-dark fw-bold">
+                              別途 または 支給
+                            </span>
+                          </div>
+                        </div>
 
-  <div class="button-area">
-    <button type="submit" class="pdf-btn">見積PDF作成</button>
+                        <!-- サイズ -->
+                        <div class="row mb-2">
+                          <label for="almiPrintSize" class="col-sm-2 col-form-label">
+                            備考
+                          </label>
+
+                          <div class="col-sm-6">
+                            <textarea id="almiPrintSize" class="form-control" name="almi_print_size"
+                              rows="4"></textarea>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- 右側 -->
+                      <div class="col-sm-5">
+                        <div class="alert alert-success" role="alert">
+                          <h5 class="alert-heading">【例】</h5>
+                          <ul>
+                            <li>自由入力です</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- これは「茶瓶」のUIです -->
+                  <div id="brownBottlePane" class="tab-pane fade p-3" role="tabpanel" aria-labelledby="brownBottle"
+                    tabindex="0">
+                    <div class="row mb-3">
+                      <!-- 左側 -->
+                      <div class="col-sm-7">
+                        <div class="row mb-3">
+                          <label for="" class="col-sm-2 col-form-label">対象にする？</label>
+                          <div class="col-sm-4 pt-2">
+                            <div class="form-check form-switch">
+                              <input type="checkbox" id="isBrownBottle" class="form-check-input" role="switch">
+                              <label for="isBrownBottle" class="form-check-label">する</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="browBottleSize" class="col-sm-2 col-form-label">サイズ</label>
+                          <div class="col-sm-4">
+                            <select id="brownBottleSize" class="form-select" name="brown_bottle_size">
+                              <option value="" selected>選択してください</option>
+
+                              <option value="SHIKYU">支給</option>
+                              <option value="H10080">H10080　8号茶瓶</option>
+                              <option value="H10100">H10100　10号茶瓶</option>
+                              <option value="H10115">H10115　11号茶瓶</option>
+                              <option value="H10120">H10120　12号茶瓶</option>
+                              <option value="H10130">H10130　13号茶瓶</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-6">
+                            <!-- 茶瓶：ラベル -->
+                            <span id="brownBottleLabelSizeBtn" class="label-size-box">
+                              ラベルサイズ：◯◯ x ◯◯ まで
+                            </span>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="brownBottleCap" class="col-sm-2 col-form-label">キャップ</label>
+                          <div class="col-sm-4">
+                            <select id="brownBottleCap" class="form-select" name="brown_bottle_cap">
+                              <option value="">選択して下さい</option>
+
+                              <option value="SHIKYU">支給</option>
+                              <option value="H10071">H10071　8号：白キャップ（P入）</option>
+                              <option value="H10081">H10081　8号：金キャップ（P入）</option>
+                              <option value="H10087">H10087　8号：銀キャップ（P入）</option>
+                              <option value="H10111">H10111　10～13号：白キャップ（P入）</option>
+                              <option value="H10117">H10117　10～13号：金キャップ（P入）</option>
+                              <option value="H10105">H10105　10～13号：銀キャップ（P入）</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="" class="col-sm-2 col-form-label">化粧箱</label>
+                          <div class="col-sm-4" bg-secondary-subtle>
+                            <!-- [TODO] 何を実装するかを明確にする必要ある -->
+                          </div>
+                          <div class="col-sm-6">
+                            <!-- 茶瓶：化粧箱 -->
+                            <span id="brownBoxSizeBtn" class="label-size-box">
+                              化粧サイズ：◯◯ x ◯◯ まで
+                            </span>
+                          </div>
+                        </div>
+                        <!-- 仕上げ -->
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label">仕上げ</label>
+
+                          <div class="col-sm-10 pt-2">
+
+                            <div class="form-check form-check-inline">
+                              <input type="checkbox" id="brownBoxShrink" class="form-check-input"
+                                name="brown_box_shrink">
+                              <label for="brownBoxShrink" class="form-check-label">化粧箱シュリンク</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                              <input type="checkbox" id="brownBottleShrink" class="form-check-input"
+                                name="brown_bottle_shrink">
+                              <label for="brownBottleShrink" class="form-check-label">ボトルシュリンク</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                              <input type="checkbox" id="brownBottleSeal" class="form-check-input"
+                                name="brown_bottle_seal">
+                              <label for="brownBottleSeal" class="form-check-label">封印シール</label>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- ↑ ここで左側 col-sm-7 を閉じる -->
+
+                      <!-- 右側 -->
+                      <div class="col-sm-5">
+                        <div class="alert alert-success" role="alert">
+                          <h5 class="alert-heading">【推奨】</h5>
+                          <ul>
+                            <li>8号瓶</li>
+                            <li>約 1/3 程度の容量です</li>
+                          </ul>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- ↑ ここで row mb-3 を閉じる -->
+                  </div>
+                  <!-- ↑ brownBottlePane を閉じる -->
+                  <!-- これは「白フロスト瓶」のUIです -->
+                  <div id="whiteFlostBottlePane" class="tab-pane fade p-3" role="tabpanel"
+                    aria-labelledby="whiteFlostBottle" tabindex="0">
+
+                    <div class="row mb-3">
+
+                      <!-- 左側 -->
+                      <div class="col-sm-7">
+
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label">対象にする？</label>
+
+                          <div class="col-sm-4 pt-2">
+                            <div class="form-check form-switch">
+                              <input type="checkbox" id="isWFlostBottle" class="form-check-input" role="switch">
+
+                              <label for="isWFlostBottle" class="form-check-label">
+                                する
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- サイズ -->
+                        <div class="row mb-3">
+
+                          <label for="wFlostBottleSize" class="col-sm-2 col-form-label">
+                            サイズ
+                          </label>
+
+                          <div class="col-sm-4">
+
+                            <select id="wFlostBottleSize" class="form-select" name="wflost_bottle_size">
+                              <option value="">選択して下さい</option>
+
+                              <option value="SHIKYU">支給</option>
+                              <option value="H10083">H10083　8K白フロスト</option>
+                              <option value="H1011K">H1011K　10K白フロスト</option>
+                              <option value="H10107">H10107　11K白フロスト</option>
+                              <option value="H10122">H10122　12号白フロスト</option>
+                              <option value="H1011S">H1011S　11号茶フロスト</option>
+
+                            </select>
+                          </div>
+                          <div class="col-sm-6">
+
+                            <!-- 白フロスト瓶：ラベル -->
+                            <span id="wFlostBottleLabelSizeBtn" class="label-size-box">
+                              ラベルサイズ：◯◯ x ◯◯ まで
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- キャップ -->
+                        <div class="row mb-3">
+
+                          <label for="wFlostBottleCap" class="col-sm-2 col-form-label">
+                            キャップ
+                          </label>
+
+                          <div class="col-sm-4">
+
+                            <select id="wFlostBottleCap" class="form-select" name="wflost_bottle_cap">
+
+                              <option value="">選択して下さい</option>
+
+                              <option value="SHIKYU">支給</option>
+                              <option value="H10071">H10071　8号：白キャップ（P入）</option>
+                              <option value="H10081">H10081　8号：金キャップ（P入）</option>
+                              <option value="H10087">H10087　8号：銀キャップ（P入）</option>
+                              <option value="H10111">H10111　10～13号：白キャップ（P入）</option>
+                              <option value="H10117">H10117　10～13号：金キャップ（P入）</option>
+                              <option value="H10105">H10105　10～13号：銀キャップ（P入）</option>
+
+                            </select>
+                          </div>
+                        </div>
+
+                        <!-- 化粧箱 -->
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label">
+                            化粧箱
+                          </label>
+                          <div class="col-sm-4"></div>
+                          <div class="col-sm-6">
+                            <!-- 白フロスト瓶：化粧箱 -->
+                            <span id="wFlostBoxBtn" class="label-size-box">
+                              化粧サイズ：◯◯ x ◯◯ まで
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- 仕上げ -->
+                        <div class="row mb-3">
+
+                          <label class="col-sm-2 col-form-label">
+                            仕上げ
+                          </label>
+
+                          <div class="col-sm-10 pt-2">
+
+                            <div class="form-check form-check-inline">
+                              <input type="checkbox" id="wFlostBoxShrink" class="form-check-input">
+                              <label for="wFlostBoxShrink" class="form-check-label">
+                                化粧箱シュリンク
+                              </label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                              <input type="checkbox" id="wFlostBottleShrink" class="form-check-input">
+                              <label for="wFlostBottleShrink" class="form-check-label">
+                                ボトルシュリンク
+                              </label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                              <input type="checkbox" id="wFlostBottleSeal" class="form-check-input">
+                              <label for="wFlostBottleSeal" class="form-check-label">
+                                封印シール
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 右側 -->
+                      <div class="col-sm-5">
+                        <div class="alert alert-success" role="alert">
+                          <h5 class="alert-heading">【推奨】</h5>
+                          <ul>
+                            <li>8号瓶</li>
+                            <li>約 1/3 程度の容量です</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- これは「プラボトル」のUIです -->
+                  <div id="plaBottlePane" class="tab-pane fade p-3" role="tabpanel" aria-labelledby="plaBottle"
+                    tabindex="0">
+
+                    <div class="row mb-3">
+
+                      <!-- 左側 -->
+                      <div class="col-sm-7">
+
+                        <!-- 対象 -->
+                        <div class="row mb-3">
+
+                          <label class="col-sm-2 col-form-label">
+                            対象にする？
+                          </label>
+
+                          <div class="col-sm-4 pt-2">
+
+                            <div class="form-check form-switch">
+
+                              <input type="checkbox" id="isPlaBottle" class="form-check-input" role="switch">
+
+                              <label for="isPlaBottle" class="form-check-label">
+
+                                する
+
+                              </label>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+
+                        <!-- サイズ -->
+                        <div class="row mb-3 align-items-center">
+                          <label for="plaBottleSize" class="col-sm-2 col-form-label">
+                            サイズ
+                          </label>
+                          <div class="col-sm-4">
+                            <select id="plaBottleSize" class="form-select" name="pla_bottle_size">
+                              <option value="">選択して下さい</option>
+
+                              <option value="SHIKYU">支給</option>
+                              <option value="H15033">H15033　ウイストン　B-8</option>
+                              <option value="H15034">H15034　ウイストン　B-10</option>
+                              <option value="H15030">H15030　ウイストン　B-11</option>
+                              <option value="H15031">H15031　ウイストン　B-12</option>
+                              <option value="H15032">H15032　ウイストン　B-13</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-6">
+
+                            <!-- プラボトル：ラベル -->
+                            <span id="plaBottleLabelSizeBtn" class="label-size-box">
+                              ラベルサイズ：◯◯ x ◯◯ まで
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- キャップ -->
+                        <div class="row mb-3 align-items-center">
+
+                          <label for="plaBottleCap" class="col-sm-2 col-form-label">
+                            キャップ
+                          </label>
+                          <div class="col-sm-4">
+                            <select id="plaBottleCap" class="form-select" name="pla_bottle_cap">
+                              <option value="">選択して下さい</option>
+
+                              <option value="SHIKYU">支給</option>
+                              <option value="H10071">H10071　8号：白キャップ（P入）</option>
+                              <option value="H10081">H10081　8号：金キャップ（P入）</option>
+                              <option value="H10087">H10087　8号：銀キャップ（P入）</option>
+                              <option value="H10111">H10111　10～13号：白キャップ（P入）</option>
+                              <option value="H10117">H10117　10～13号：金キャップ（P入）</option>
+                              <option value="H10105">H10105　10～13号：銀キャップ（P入）</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <!-- 化粧箱 -->
+                        <div class="row mb-3 align-items-center">
+
+                          <label class="col-sm-2 col-form-label">
+                            化粧箱
+                          </label>
+
+                          <div class="col-sm-4">
+                            <select id="plaBottleBoxFlg" class="form-select">
+                              <option value="なし" selected>なし</option>
+                              <option value="あり">あり</option>
+                            </select>
+                          </div>
+
+                          <div class="col-sm-6">
+                            <span id="plaBottleBoxSizeBtn" class="label-size-box">
+                              化粧箱サイズ：〇〇 × 〇〇まで
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- 仕上げ -->
+                        <div class="row mb-3">
+
+                          <label class="col-sm-2 col-form-label">
+
+                            仕上げ
+
+                          </label>
+
+                          <div class="col-sm-10 pt-2">
+
+                            <!-- 化粧箱シュリンク -->
+                            <div class="form-check form-check-inline">
+
+                              <input type="checkbox" id="plaBottleBoxShrink" class="form-check-input"
+                                name="pla_bottle_box_shrink">
+
+                              <label for="plaBottleBoxShrink" class="form-check-label">
+
+                                化粧箱シュリンク
+
+                              </label>
+
+                            </div>
+
+
+                            <!-- ボトルシュリンク -->
+                            <div class="form-check form-check-inline">
+
+                              <input type="checkbox" id="plaBottleShrink" class="form-check-input"
+                                name="pla_bottle_shrink">
+
+                              <label for="plaBottleShrink" class="form-check-label">
+
+                                ボトルシュリンク
+
+                              </label>
+
+                            </div>
+
+
+                            <!-- 封印シール -->
+                            <div class="form-check form-check-inline">
+
+                              <input type="checkbox" id="plaBottleSeal" class="form-check-input" name="pla_bottle_seal">
+
+                              <label for="plaBottleSeal" class="form-check-label">
+
+                                封印シール
+
+                              </label>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+                      <!-- 右側 -->
+                      <div class="col-sm-5">
+
+                        <div class="alert alert-success" role="alert">
+
+                          <h5 class="alert-heading">
+
+                            【推奨】
+
+                          </h5>
+
+                          <ul>
+
+                            <li>プラボトル8号</li>
+                            <li>約 1/3 程度の容量です</li>
+
+                          </ul>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
   </div>
+  </div>
+  </div>
+  </form>
+  </main>
+
+  <!-- フッター部 -->
+  <nav class="navbar py-3 fixed-bottom bg-light">
+    <div class="container-fluid">
+      <span class="fw-lighter px-5 fs-6">&copy; 2026, Created by TSUJIKAWA.</span>
+    </div>
+  </nav>
+  </div>
+
+  <!-- クライアントアプリ -->
+  <script type="module" src="js/app.js"></script>
 </body>
 
 </html>

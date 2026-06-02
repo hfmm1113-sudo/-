@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>資材各種詳細</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    body {
+      font-family: "Noto Sans JP", sans-serif;
+      background: #f8fbff;
+      color: #111827;
+      padding-bottom: 40px;
+    }
+
+    .material-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    .material-title {
+      font-size: 2rem;
+      font-weight: 800;
+      border-left: 6px solid #159947;
+      padding-left: 14px;
+      margin-bottom: 12px;
+    }
+
+    .material-lead {
+      color: #475569;
+      margin-bottom: 28px;
+    }
+
+    .material-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title i {
+      color: #159947;
+    }
+
+    .search-box {
+      max-width: 420px;
+    }
+
+    .table-material th {
+      background: #eefaf2;
+      color: #166534;
+      white-space: nowrap;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .table-material td {
+      vertical-align: middle;
+    }
+
+    .code-cell {
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .size-cell {
+      white-space: nowrap;
+    }
+
+    .type-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #eef5ff;
+      color: #0d6efd;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .back-btn {
+      border: 1px solid #159947;
+      color: #159947;
+      font-weight: 700;
+    }
+
+    .back-btn:hover {
+      background: #159947;
+      color: white;
+    }
+
+    @media (max-width: 576px) {
+      .material-wrap {
+        padding: 24px 14px;
+      }
+
+      .material-card {
+        padding: 16px;
+      }
+
+      .material-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="material-wrap">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h1 class="material-title">資材各種詳細</h1>
+        <div class="material-lead">
+          段ボールサイズ・袋サイズを確認できます。コードや名称で検索できます。
+        </div>
+      </div>
+
+      <a href="index.html" class="btn back-btn">
+        <i class="bi bi-house-door-fill"></i>
+        TOPへ戻る
+      </a>
+    </div>
+
+    <ul class="nav nav-tabs mb-3" id="materialTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="cardboard-tab" data-bs-toggle="tab"
+                data-bs-target="#cardboardPane" type="button" role="tab">
+          <i class="bi bi-box-seam"></i> 段ボールサイズ
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="bag-tab" data-bs-toggle="tab"
+                data-bs-target="#bagPane" type="button" role="tab">
+          <i class="bi bi-bag"></i> 袋サイズ
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- 段ボール -->
+      <section class="tab-pane fade show active material-card" id="cardboardPane" role="tabpanel">
+
+        <div class="section-title">
+          <i class="bi bi-box-seam"></i>
+          段ボールサイズ一覧
+        </div>
+
+        <input type="text" id="cardboardSearch" class="form-control search-box mb-3"
+               placeholder="コード・No・材質で検索 例：F10001、No.1、K5A">
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover table-material">
+            <thead>
+              <tr>
+                <th>コード</th>
+                <th>サイズ名</th>
+                <th>長さ</th>
+                <th>幅</th>
+                <th>高さ</th>
+                <th>材質</th>
+              </tr>
+            </thead>
+            <tbody id="cardboardBody"></tbody>
+          </table>
+        </div>
+
+      </section>
+
+      <!-- 袋 -->
+      <section class="tab-pane fade material-card" id="bagPane" role="tabpanel">
+
+        <div class="section-title">
+          <i class="bi bi-bag"></i>
+          袋サイズ一覧
+        </div>
+
+        <input type="text" id="bagSearch" class="form-control search-box mb-3"
+               placeholder="コード・袋種類・サイズで検索 例：K11261、AL-9W、32+115">
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover table-material">
+            <thead>
+              <tr>
+                <th>タイプ</th>
+                <th>コード</th>
+                <th>袋種類</th>
+                <th>サイズ</th>
+                <th>袋重量（ｇ）</th>
+              </tr>
+            </thead>
+            <tbody id="bagBody"></tbody>
+          </table>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const CARDBOARDS = [
+  {
+    "code": "F10001",
+    "name": "Ｎｏ．１",
+    "length": "365",
+    "width": "245",
+    "height": "123",
+    "material": "K5A"
+  },
+  {
+    "code": "F10003",
+    "name": "Ｎｏ．３",
+    "length": "316",
+    "width": "218",
+    "height": "128",
+    "material": ""
+  },
+  {
+    "code": "F10013",
+    "name": "Ｎｏ．１３",
+    "length": "243",
+    "width": "183",
+    "height": "126",
+    "material": "K5A"
+  },
+  {
+    "code": "F10021",
+    "name": "Ｎｏ．２１",
+    "length": "366",
+    "width": "276",
+    "height": "307",
+    "material": "K6A"
+  },
+  {
+    "code": "F10022",
+    "name": "Ｎｏ．２２",
+    "length": "246",
+    "width": "167",
+    "height": "285",
+    "material": ""
+  },
+  {
+    "code": "F10026",
+    "name": "Ｎｏ．２６",
+    "length": "340",
+    "width": "235",
+    "height": "190",
+    "material": ""
+  },
+  {
+    "code": "F10033",
+    "name": "Ｎｏ．３３",
+    "length": "316",
+    "width": "218",
+    "height": "103",
+    "material": "K5A"
+  },
+  {
+    "code": "F10034",
+    "name": "Ｎｏ．３４",
+    "length": "260",
+    "width": "196",
+    "height": "139",
+    "material": "K5A"
+  },
+  {
+    "code": "F10035",
+    "name": "Ｎｏ．３５",
+    "length": "300",
+    "width": "224",
+    "height": "146",
+    "material": "K5A"
+  },
+  {
+    "code": "F10040",
+    "name": "Ｎｏ．４０",
+    "length": "360",
+    "width": "252",
+    "height": "165",
+    "material": ""
+  },
+  {
+    "code": "F10052",
+    "name": "Ｎｏ．５２",
+    "length": "356",
+    "width": "306",
+    "height": "240",
+    "material": "K6A"
+  },
+  {
+    "code": "F10055",
+    "name": "Ｎｏ．５５",
+    "length": "505",
+    "width": "424",
+    "height": "388",
+    "material": "K6A(強化200)"
+  },
+  {
+    "code": "F10061",
+    "name": "Ｎｏ．６１",
+    "length": "272",
+    "width": "185",
+    "height": "175",
+    "material": "K5A"
+  },
+  {
+    "code": "F10062",
+    "name": "Ｎｏ．６２",
+    "length": "406",
+    "width": "293",
+    "height": "204",
+    "material": "K6A"
+  },
+  {
+    "code": "F10066",
+    "name": "Ｎｏ．６６",
+    "length": "360",
+    "width": "252",
+    "height": "145",
+    "material": "K5A"
+  },
+  {
+    "code": "F10067",
+    "name": "Ｎｏ．６７",
+    "length": "306",
+    "width": "256",
+    "height": "197",
+    "material": "K5A"
+  },
+  {
+    "code": "F10068",
+    "name": "Ｎｏ．６８",
+    "length": "520",
+    "width": "474",
+    "height": "148",
+    "material": "K5A"
+  },
+  {
+    "code": "F10069",
+    "name": "Ｎｏ．６９",
+    "length": "206",
+    "width": "214",
+    "height": "194",
+    "material": "K5A"
+  },
+  {
+    "code": "F10070",
+    "name": "Ｎｏ．７０",
+    "length": "249",
+    "width": "254",
+    "height": "352",
+    "material": "C5W"
+  },
+  {
+    "code": "F10071",
+    "name": "Ｎｏ．７１",
+    "length": "331",
+    "width": "223",
+    "height": "110",
+    "material": "C5A"
+  },
+  {
+    "code": "F10072",
+    "name": "Ｎｏ．７２",
+    "length": "500",
+    "width": "350",
+    "height": "160",
+    "material": "K5A"
+  },
+  {
+    "code": "F10074",
+    "name": "Ｎｏ．７４",
+    "length": "600",
+    "width": "350",
+    "height": "300",
+    "material": "K5A"
+  },
+  {
+    "code": "F10075",
+    "name": "Ｎｏ．７５",
+    "length": "476",
+    "width": "415",
+    "height": "261",
+    "material": "K5A"
+  },
+  {
+    "code": "F10084",
+    "name": "Ｎｏ．８４",
+    "length": "420",
+    "width": "326",
+    "height": "100",
+    "material": "K5A"
+  },
+  {
+    "code": "F10085",
+    "name": "◆Ｎｏ．８５",
+    "length": "437",
+    "width": "364",
+    "height": "110",
+    "material": "K5A"
+  },
+  {
+    "code": "F10086",
+    "name": "Ｎｏ．８６",
+    "length": "437",
+    "width": "364",
+    "height": "212",
+    "material": "K5A"
+  },
+  {
+    "code": "F10087",
+    "name": "Ｎｏ．８７",
+    "length": "319",
+    "width": "225",
+    "height": "176",
+    "material": "K5A"
+  },
+  {
+    "code": "F10088",
+    "name": "Ｎｏ．８８",
+    "length": "606",
+    "width": "340",
+    "height": "214",
+    "material": "K5A"
+  },
+  {
+    "code": "F10091",
+    "name": "◆Ｎｏ．９１",
+    "length": "340",
+    "width": "260",
+    "height": "220",
+    "material": "C5W"
+  },
+  {
+    "code": "F10095",
+    "name": "◆Ｎｏ．９5",
+    "length": "443",
+    "width": "437",
+    "height": "228",
+    "material": "K6A"
+  },
+  {
+    "code": "F10098",
+    "name": "◆Ｎｏ．９８",
+    "length": "448",
+    "width": "266",
+    "height": "325",
+    "material": "ｋ6Ａ"
+  },
+  {
+    "code": "F10101",
+    "name": "Ｎｏ．１０１",
+    "length": "273",
+    "width": "224",
+    "height": "167",
+    "material": "K5Ａ"
+  },
+  {
+    "code": "F10102",
+    "name": "Ｎｏ．１０２",
+    "length": "290",
+    "width": "243",
+    "height": "187",
+    "material": "K5Ａ"
+  },
+  {
+    "code": "F10103",
+    "name": "Ｎｏ．１０３",
+    "length": "341",
+    "width": "285",
+    "height": "214",
+    "material": "K5Ａ"
+  },
+  {
+    "code": "F10104",
+    "name": "Ｎｏ．１０４",
+    "length": "360",
+    "width": "300",
+    "height": "235",
+    "material": "K5Ａ"
+  },
+  {
+    "code": "F10107",
+    "name": "Ｎｏ．１０７",
+    "length": "364",
+    "width": "264",
+    "height": "181",
+    "material": "K6Ａ"
+  },
+  {
+    "code": "F10109",
+    "name": "Ｎｏ．１０９",
+    "length": "362",
+    "width": "214",
+    "height": "245",
+    "material": "K5Ａ"
+  },
+  {
+    "code": "F10111",
+    "name": "Ｎｏ．１１１",
+    "length": "514",
+    "width": "313",
+    "height": "139",
+    "material": "K6A "
+  },
+  {
+    "code": "F10113",
+    "name": "Ｎｏ．１１３",
+    "length": "271",
+    "width": "186",
+    "height": "254",
+    "material": "K6A"
+  },
+  {
+    "code": "F10114",
+    "name": "Ｎｏ．１１４",
+    "length": "391",
+    "width": "266",
+    "height": "134",
+    "material": "K5A"
+  },
+  {
+    "code": "F10115",
+    "name": "Ｎｏ．１１５",
+    "length": "531",
+    "width": "256",
+    "height": "289",
+    "material": "K5A"
+  },
+  {
+    "code": "F10116",
+    "name": "Ｎｏ．１１６",
+    "length": "316",
+    "width": "236",
+    "height": "154",
+    "material": "K5A"
+  },
+  {
+    "code": "F10119",
+    "name": "Ｎｏ．１１９",
+    "length": "418",
+    "width": "290",
+    "height": "228",
+    "material": "K6A"
+  },
+  {
+    "code": "F10120",
+    "name": "Ｎｏ．１２０",
+    "length": "434",
+    "width": "253",
+    "height": "249",
+    "material": "K5A"
+  },
+  {
+    "code": "F10121",
+    "name": "Ｎｏ．１２１",
+    "length": "289",
+    "width": "212",
+    "height": "154",
+    "material": "K5A"
+  },
+  {
+    "code": "F10126",
+    "name": "◆№126",
+    "length": "506",
+    "width": "466",
+    "height": "139",
+    "material": "K5A"
+  },
+  {
+    "code": "F10127",
+    "name": "№127",
+    "length": "320",
+    "width": "235",
+    "height": "190",
+    "material": "K5A"
+  },
+  {
+    "code": "F10128",
+    "name": "◆№128",
+    "length": "287",
+    "width": "213",
+    "height": "152",
+    "material": "K6A"
+  },
+  {
+    "code": "F10129",
+    "name": "№129",
+    "length": "381",
+    "width": "251",
+    "height": "104",
+    "material": "K5A"
+  },
+  {
+    "code": "F10131",
+    "name": "№131",
+    "length": "395",
+    "width": "266",
+    "height": "140",
+    "material": "K6A"
+  },
+  {
+    "code": "F10132",
+    "name": "№132",
+    "length": "371",
+    "width": "250",
+    "height": "132",
+    "material": "K6A"
+  },
+  {
+    "code": "F10133",
+    "name": "№133",
+    "length": "353",
+    "width": "238",
+    "height": "122",
+    "material": "K6A"
+  },
+  {
+    "code": "F10134",
+    "name": "№134",
+    "length": "419",
+    "width": "339",
+    "height": "178",
+    "material": "K6A"
+  },
+  {
+    "code": "F10136",
+    "name": "№136",
+    "length": "370",
+    "width": "305",
+    "height": "235",
+    "material": "K6A120"
+  },
+  {
+    "code": "F10137",
+    "name": "№137",
+    "length": "525",
+    "width": "386",
+    "height": "250",
+    "material": "K6W"
+  },
+  {
+    "code": "F10139",
+    "name": "№139",
+    "length": "475",
+    "width": "305",
+    "height": "130",
+    "material": "K6A"
+  },
+  {
+    "code": "F10140",
+    "name": "№140",
+    "length": "350",
+    "width": "340",
+    "height": "190",
+    "material": "K5A"
+  },
+  {
+    "code": "F10141",
+    "name": "№141",
+    "length": "546",
+    "width": "354",
+    "height": "306",
+    "material": "K6A"
+  },
+  {
+    "code": "F10142",
+    "name": "№142",
+    "length": "630",
+    "width": "430",
+    "height": "260",
+    "material": "K6W"
+  },
+  {
+    "code": "F10143",
+    "name": "№143",
+    "length": "450",
+    "width": "240",
+    "height": "163",
+    "material": "K6A"
+  },
+  {
+    "code": "F10144",
+    "name": "№144",
+    "length": "255",
+    "width": "340",
+    "height": "100",
+    "material": "K5A"
+  },
+  {
+    "code": "F10145",
+    "name": "№145",
+    "length": "377",
+    "width": "232",
+    "height": "133",
+    "material": "K6A"
+  },
+  {
+    "code": "F10146",
+    "name": "№146",
+    "length": "535",
+    "width": "268",
+    "height": "113",
+    "material": "K6A"
+  },
+  {
+    "code": "F10147",
+    "name": "№147",
+    "length": "410",
+    "width": "305",
+    "height": "150",
+    "material": "K6A"
+  },
+  {
+    "code": "F10148",
+    "name": "№148",
+    "length": "520",
+    "width": "350",
+    "height": "275",
+    "material": "K5A"
+  },
+  {
+    "code": "F10149",
+    "name": "№149",
+    "length": "319",
+    "width": "254",
+    "height": "330",
+    "material": "K6A"
+  },
+  {
+    "code": "F10150",
+    "name": "№150",
+    "length": "284",
+    "width": "220",
+    "height": "355",
+    "material": "K6A"
+  },
+  {
+    "code": "F10151",
+    "name": "№151",
+    "length": "311",
+    "width": "238",
+    "height": "287",
+    "material": "K6A"
+  },
+  {
+    "code": "F10152",
+    "name": "№152",
+    "length": "267",
+    "width": "226",
+    "height": "164",
+    "material": "K6A"
+  }
+];
+
+    const BAGS = [
+  {
+    "type": "三方タイプ",
+    "code": "------",
+    "kind": "ラミジップAL-D",
+    "size": "20+120*85",
+    "weight": "3"
+  },
+  {
+    "type": "三方タイプ",
+    "code": "K11233",
+    "kind": "ラミジップAL-E",
+    "size": "20+140*100",
+    "weight": "3"
+  },
+  {
+    "type": "三方タイプ",
+    "code": "K11271",
+    "kind": "ラミジップAL-EW",
+    "size": "20+140*100",
+    "weight": "4"
+  },
+  {
+    "type": "三方タイプ",
+    "code": "K11234",
+    "kind": "ラミジップAL-F",
+    "size": "20+170*120",
+    "weight": "5"
+  },
+  {
+    "type": "三方タイプ",
+    "code": "K11272",
+    "kind": "ラミジップAL-FW",
+    "size": "20+170*120",
+    "weight": ""
+  },
+  {
+    "type": "三方タイプ",
+    "code": "K11235",
+    "kind": "ラミジップAL-G",
+    "size": "20+200*140",
+    "weight": "7"
+  },
+  {
+    "type": "三方タイプ",
+    "code": "K11232",
+    "kind": "ラミジップAL-H",
+    "size": "20+240*170",
+    "weight": "10"
+  },
+  {
+    "type": "三方タイプ",
+    "code": "K11231",
+    "kind": "ラミジップAL-I",
+    "size": "20+280*200",
+    "weight": "12"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11226",
+    "kind": "ラミジップAL-９（穴有り）",
+    "size": "32+115*90 (28)",
+    "weight": "4"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11261",
+    "kind": "ラミジップAL-９W",
+    "size": "32+115*90 (28)",
+    "weight": ""
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11220",
+    "kind": "ラミジップAL-１０",
+    "size": "32+160*100 (30)",
+    "weight": "6"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11262",
+    "kind": "ラミジップAL-10W",
+    "size": "32+160*100 (30)",
+    "weight": "6"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "------",
+    "kind": "ラミジップAL-11",
+    "size": "32+170*110 (33)",
+    "weight": "7"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11221",
+    "kind": "ラミジップAL-12",
+    "size": "32+180*120 (35)",
+    "weight": "8"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11263",
+    "kind": "ラミジップAL-12W",
+    "size": "32+180*120 (35)",
+    "weight": "8"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "------",
+    "kind": "ラミジップAL-13",
+    "size": "32+190*130 (37)",
+    "weight": "9"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11222",
+    "kind": "ラミジップAL-14",
+    "size": "32+200*140 (41)",
+    "weight": "10"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11264",
+    "kind": "ラミジップAL-14W",
+    "size": "",
+    "weight": ""
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "------",
+    "kind": "ラミジップAL-15",
+    "size": "32+210*150 (45)",
+    "weight": "11"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11225",
+    "kind": "ラミジップAL-16",
+    "size": "32+230*160 (47)",
+    "weight": "13"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11265",
+    "kind": "ラミジップAL-16W",
+    "size": "",
+    "weight": ""
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11251",
+    "kind": "ラミジップLZ-12",
+    "size": "32+180*120 (35)",
+    "weight": ""
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11291・3・4",
+    "kind": "ＡＬ－１０１３（ＧＤ・BK・R）",
+    "size": "32+130*100 (30)",
+    "weight": "4"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11292・5～8",
+    "kind": "ＡＬ－１２１６（GD,BK,R,GR,OR）",
+    "size": "32+160*120 (35)",
+    "weight": "7"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11299",
+    "kind": "ＡＬ－１４２０（ＢＫ）",
+    "size": "32+200*140 (41)",
+    "weight": " "
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11303",
+    "kind": "ホワイトジッパーA90",
+    "size": "",
+    "weight": "4"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11302",
+    "kind": "ホワイトジッパーA100",
+    "size": "",
+    "weight": "6"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11302",
+    "kind": "ホワイトジッパーA100",
+    "size": "",
+    "weight": "6"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11301",
+    "kind": "ホワイトジッパーA120",
+    "size": "",
+    "weight": "8"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11304",
+    "kind": "ホワイトジッパーA140",
+    "size": "",
+    "weight": "10"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11304",
+    "kind": "ホワイトジッパーA140",
+    "size": "",
+    "weight": "10"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11306",
+    "kind": "ホワイトジッパーA160",
+    "size": "",
+    "weight": "12"
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11311",
+    "kind": "ホワイトジッパーB85",
+    "size": "",
+    "weight": ""
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11312",
+    "kind": "ホワイトジッパーB100",
+    "size": "",
+    "weight": ""
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11501",
+    "kind": "ALスタンド120*200ブラック",
+    "size": "",
+    "weight": ""
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11503",
+    "kind": "ALスタンプ110*170ピンク",
+    "size": "",
+    "weight": ""
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11505",
+    "kind": "クラフト",
+    "size": "30+140*110 (50)",
+    "weight": ""
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11504",
+    "kind": "ALスタンプ110*180クラフト",
+    "size": "",
+    "weight": ""
+  },
+  {
+    "type": "スタンドタイプ",
+    "code": "K11506",
+    "kind": "ALスタンド90*145クラフト",
+    "size": "",
+    "weight": ""
+  }
+];
+
+    function renderCardboards(keyword = "") {
+      const tbody = document.getElementById("cardboardBody");
+      const key = keyword.toLowerCase();
+
+      const rows = CARDBOARDS.filter(item =>
+        Object.values(item).join(" ").toLowerCase().includes(key)
+      );
+
+      tbody.innerHTML = rows.map(item => `
+        <tr>
+          <td class="code-cell">${item.code}</td>
+          <td>${item.name}</td>
+          <td class="text-end">${item.length}</td>
+          <td class="text-end">${item.width}</td>
+          <td class="text-end">${item.height}</td>
+          <td>${item.material}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderBags(keyword = "") {
+      const tbody = document.getElementById("bagBody");
+      const key = keyword.toLowerCase();
+
+      const rows = BAGS.filter(item =>
+        Object.values(item).join(" ").toLowerCase().includes(key)
+      );
+
+      tbody.innerHTML = rows.map(item => `
+        <tr>
+          <td><span class="type-badge">${item.type}</span></td>
+          <td class="code-cell">${item.code}</td>
+          <td>${item.kind}</td>
+          <td class="size-cell">${item.size}</td>
+          <td class="text-end">${item.weight}</td>
+        </tr>
+      `).join("");
+    }
+
+    document.getElementById("cardboardSearch").addEventListener("input", e => {
+      renderCardboards(e.target.value);
+    });
+
+    document.getElementById("bagSearch").addEventListener("input", e => {
+      renderBags(e.target.value);
+    });
+
+    renderCardboards();
+    renderBags();
+  </script>
+
+</body>
+</html>

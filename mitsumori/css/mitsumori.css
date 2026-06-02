@@ -1,0 +1,130 @@
+body {
+  margin: 0;
+  background-color: #f5f5f5;
+  font-family: sans-serif;
+}
+
+.estimate-box {
+  width: 100%;
+  margin: 0;
+  background-color: #eeeeee;
+  border: 1px solid #555;
+  box-sizing: border-box;
+}
+
+.title {
+  width: 100%;
+  background-color: #0050f0;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  padding: 18px 0;
+  font-size: 24px;
+  box-sizing: border-box;
+}
+
+.top-info {
+  text-align: right;
+  padding: 15px 8%;
+}
+
+.top-info div {
+  margin-bottom: 8px;
+}
+
+.top-info label {
+  display: inline-block;
+  width: 70px;
+}
+
+input {
+  height: 28px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.top-info input {
+  width: 150px;
+}
+
+.customer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 8%;
+  border-bottom: 1px solid #555;
+}
+
+.customer label {
+  width: 80px;
+  font-weight: bold;
+}
+
+.customer input {
+  flex: 1;
+}
+
+.left-input {
+  text-align: left;
+}
+
+.input-area {
+  padding: 25px 8%;
+  border-bottom: 1px solid #555;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-row label {
+  width: 220px;
+  text-align: right;
+  margin-right: 25px;
+}
+
+.form-row input {
+  flex: 1;
+  max-width: 500px;
+}
+
+.add-btn {
+  display: block;
+  margin-left: auto;
+  margin-right: 8%;
+  margin-top: 8px;
+  padding: 5px 12px;
+}
+
+.section-title {
+  margin: 20px 8%;
+  background-color: #aee6f8;
+  border: 1px solid #2aa7d8;
+  border-radius: 5px;
+  text-align: center;
+  padding: 8px;
+}
+
+.material-area {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 6% 30px;
+}
+
+.material-item {
+  text-align: center;
+  font-size: 12px;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  background-color: #4b164e;
+  color: white;
+  border-radius: 50%;
+  line-height: 60px;
+  font-size: 28px;
+  margin: 0 auto 8px;
+}

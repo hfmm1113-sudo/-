@@ -1,0 +1,131 @@
+/* ヘッダー */
+.top-navbar{
+    background:#dde6ee;
+}
+
+/* ヘッダー内 */
+.top-header-inner{
+    width:100%;
+    height:60px;
+
+    padding:0 20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+/* ロゴ */
+.top-logo{
+    display:inline-block;
+}
+
+.top-logo img{
+    height:50px;
+    width:auto;
+    max-width:280px;
+    display:block;
+    object-fit:contain;
+}
+
+/* 管理者 */
+.top-user{
+    display:flex;
+    align-items:center;
+    gap:6px;
+
+    color:#334155;
+    font-weight:600;
+    white-space:nowrap;
+}
+
+/* スマホ */
+@media (max-width:576px){
+
+    .menu-card{
+        min-height:240px;
+        padding:24px;
+    }
+
+    .menu-title{
+        font-size:1.4rem;
+        line-height:1.4;
+    }
+
+    .menu-desc{
+        line-height:1.8;
+    }
+}
+
+/* メニューカード */
+.menu-card{
+    min-height:230px;
+    height:auto;
+    padding:28px;
+    overflow:visible;
+
+    display:block;
+    text-decoration:none;
+    color:inherit;
+
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+    box-shadow:0 6px 18px rgba(15,23,42,0.08);
+}
+
+.menu-title{
+    font-size:1.45rem;
+    font-weight:800;
+    line-height:1.4;
+}
+
+.menu-desc{
+    line-height:1.8;
+    color:#334155;
+}
+
+.label-size-box{
+    display:inline-block;
+    padding:8px 14px;
+    border:1px solid #ffc107;
+    border-radius:8px;
+    background:#ffffff;
+    color:#ff9800;
+    font-weight:700;
+}
+
+/* PC・タブレットは横並び */
+.menu-card .d-flex {
+    flex-direction: row;
+}
+
+/* 小さい画面だけ縦並び */
+.menu-card{
+    min-width: 145px;
+}
+
+.menu-title{
+    white-space: normal;
+    word-break: keep-all;
+    line-height: 1.4;
+}
+
+.menu-desc{
+    word-break: keep-all;
+    line-height: 1.8;
+}
+
+.estimate-body{
+    padding-top: 100px;
+    padding-bottom: 80px;
+}
+
+.menu-desc{
+    line-height:1.8;
+    color:#334155;
+
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+}

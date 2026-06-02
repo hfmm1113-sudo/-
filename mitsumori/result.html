@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts: Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" 
+        rel="stylesheet">
+  <!-- Bootstrap: CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!--  -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Bootstrap: JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer
+          crossorigin="anonymous">
+  </script>
+  <!-- Day.js -->
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <!-- ヘッダー部 -->
+    <nav class="navbar navbar-expand-lg py-4 fixed-top shadow-sm bg-primary bg-opacity-75" data-bs-theme="light">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 px-3 h1 text-white">概算見積もりシステム</span>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#estMenu"
+                                                     aria-controls="estMenu" aria-expanded="false">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="estMenu" class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto pe-4 mb-0 mb-lg-0">
+            <li class="nav-item" role="button">
+              <!-- [TODO] 適切なパスに変更が必要 -->
+              <a href="help/UsageGuide.pdf" class="nav-link text-white" target="_blank">
+                <i class="bi bi-question-circle-fill"></i> ヘルプ
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ボディ部 -->
+    <main class="container-fluid estimate-body">
+      <!-- 処理結果メッセージ -->
+      <div class="alert alert-info" role="alert">
+        仮見積もりの結果です。内容を確認して下さい。
+      </div>
+      <!-- 処理ボタン -->
+      <div class="row mb-2">
+        <div class="col-sm-12 d-flex justify-content-end">
+          <button type="button" id="backBtn" class="btn btn-secondary me-2">
+            <i class="bi bi-arrow-return-left"></i> 戻る
+          </button>
+          <button type="button" id="retryBtn" class="btn btn-warning me-2">
+            <i class="bi bi-arrow-repeat"></i> 再見積もり
+          </button>
+          <button type="button" id="execBtn" class="btn btn-success me-2">
+            <i class="bi bi-newspaper"></i> 見積書発行
+          </button>
+        </div>
+      </div>
+      <!-- 区切り線 -->
+      <div class="row mb-5">
+        <div class="col-sm-12"><hr></div>
+      </div>
+      <!-- 画面共通部（上部） -->
+      <div class="row mx-1 mb-3 px-2 py-3 border rounded-2 bg-light">
+        <div class="col-sm-1 text-end">作成日</div>
+        <div class="col-sm-1 text-primary-emphasis text-decoration-underline">
+          <span id="outCreatedAt"></span>
+        </div>
+        <div class="col-sm-1 text-end">案件No</div>
+        <div class="col-sm-1 text-primary-emphasis text-decoration-underline">
+          <span id="outCaseNo"></span>
+        </div>
+        <div class="col-sm-1 text-end">顧客名</div>
+        <div class="col-sm-3 text-primary-emphasis text-decoration-underline">
+          <span id="outCustomerName"></span> 様
+        </div>
+      </div>
+      <!-- テーブル -->
+      <div class="row mb-1">
+        <div class="col-sm-12">
+          <table class="table table-striped">
+            <thead class="table-dark">
+              <tr><th scope="col">ロット情報</th>
+                  <th scope="col">単価</th>
+                  <th scope="col">提出金額</th>
+                  <th scope="col">利益額</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>150 ロット</td>
+                  <td>〇〇 円</td>
+                  <td>〇〇×× 円</td>
+                  <td>××〇〇 円</td>
+              </tr>
+              <tr><td>250 ロット</td>
+                  <td>〇〇 円</td>
+                  <td>〇〇×× 円</td>
+                  <td>××〇〇 円</td>
+              </tr>
+              <tr><td>100 ロット</td>
+                  <td>〇〇 円</td>
+                  <td>〇〇×× 円</td>
+                  <td>××〇〇 円</td>
+              </tr>
+              <tr><td>300 ロット</td>
+                  <td>〇〇 円</td>
+                  <td>〇〇×× 円</td>
+                  <td>××〇〇 円</td>
+              </tr>
+              <tr><td>80 ロット</td>
+                  <td>〇〇 円</td>
+                  <td>〇〇×× 円</td>
+                  <td>××〇〇 円</td>
+              </tr>
+              <tr><td>230 ロット</td>
+                  <td>〇〇 円</td>
+                  <td>〇〇×× 円</td>
+                  <td>××〇〇 円</td>
+              </tr>
+              <tr><td>410 ロット</td>
+                  <td>〇〇 円</td>
+                  <td>〇〇×× 円</td>
+                  <td>××〇〇 円</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- フッター部 -->
+    <nav class="navbar py-3 fixed-bottom bg-light">
+      <div class="container-fluid">
+        <span class="fw-lighter px-5 fs-6">&copy; 2026, Created by TSUJIKAWA.</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- クライアントアプリ -->
+  <script type="module" src="js/result.js"></script>
+</body>
+</html>
